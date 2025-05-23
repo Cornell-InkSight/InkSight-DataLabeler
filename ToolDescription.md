@@ -1,110 +1,146 @@
 # InkSight Data Labeling Tool
 
-## Overview
+**A specialized annotation platform for STEM lecture videos designed to create high-quality training data for FCN-Lecture Net models.**
 
-InkSight is a specialized data labeling platform designed for STEM lecture videos and FCN-Lecture Net training data preparation. The application provides an annotation workspace where users can collaboratively label video content with different annotation types like handwritten text, mathematical notation, diagrams, and more.
+## What it does
 
-## User Preferences
+The InkSight Data Labeling Tool enables researchers and educators to efficiently annotate lecture videos with frame-level precision. It's specifically designed for STEM education content, supporting the annotation of handwritten text, mathematical notation, diagrams, background elements, and erasure regions.
 
-Preferred communication style: Simple, everyday language.
+## Key Features
 
-## System Architecture
+- **Frame-by-Frame Annotation**: Precise video annotation with multiple drawing tools (bounding boxes, polygons, freehand)
+- **Real-Time Collaboration**: Multiple annotators can work on the same video simultaneously with live updates
+- **Quality Control**: Built-in validation workflow with role-based access (annotator, lead annotator, admin)
+- **Export for AI Training**: Generates FCN-Lecture Net compatible training data with quality metrics
+- **Project Management**: Organize annotation work by course, topic, or research project
 
-### Frontend Architecture
-- **Framework**: React 18 with TypeScript
-- **Styling**: Tailwind CSS with shadcn/ui component library
-- **Routing**: Wouter for client-side routing
-- **State Management**: TanStack Query for server state, React hooks for local state
-- **Build Tool**: Vite for development and bundling
+## Who it's for
 
-### Backend Architecture
-- **Runtime**: Node.js with Express.js
-- **Language**: TypeScript with ES modules
-- **Database**: PostgreSQL with Drizzle ORM
-- **Real-time**: WebSocket server for collaboration features
-- **File Handling**: Multer for video file uploads
+- **Researchers** developing AI models for educational content analysis
+- **Educational institutions** creating accessible learning materials
+- **Data scientists** working on handwriting recognition and mathematical notation detection
+- **Content creators** preparing lecture videos for AI-enhanced note-taking systems
 
-### Database Design
-The application uses PostgreSQL as the primary database with the following core entities:
-- **Users**: Authentication and role management (annotator, lead_annotator, admin)
-- **Projects**: Organization of annotation work by course/topic
-- **Video Files**: Storage of uploaded video content with metadata
-- **Annotations**: Frame-specific annotations with coordinates and labels
-- **Temporal Events**: Time-based events in videos
-- **Collaboration Sessions**: Real-time collaboration tracking
+## How it works
 
-## Key Components
+1. **Upload** lecture videos to organized projects
+2. **Annotate** frame-by-frame using specialized tools for different content types
+3. **Collaborate** with team members in real-time annotation sessions
+4. **Validate** annotations through quality control workflows
+5. **Export** training data in formats ready for AI model development
 
-### Video Player & Canvas System
-- Custom video player with frame-by-frame navigation
-- HTML5 Canvas overlay for annotation drawing
-- Support for multiple annotation tools (bounding box, polygon, freehand)
-- Timeline scrubbing with annotation visualization
+## Diagram Labeling Workflow
 
-### Annotation Tools
-- **Bounding Box**: Rectangular region selection
-- **Polygon**: Complex shape annotation
-- **Freehand**: Paint-style annotation
-- **Eraser**: Annotation removal tool
+### **Annotation Tools for Diagrams**
+- **🔲 Bounding Box**: Draw rectangles around simple diagrams (charts, graphs, tables)
+- **📦 Polygon**: Create complex shapes for irregular diagrams (custom shapes, organic forms)
+- **🎨 Freehand**: Paint-style annotation for intricate diagrams (hand-drawn sketches, complex illustrations)
 
-### Real-time Collaboration
-- WebSocket-based real-time updates
-- Live cursor tracking and frame synchronization
-- Collaborative annotation sessions with user presence indicators
+### **Color-Coded Classification System**
+- **🔵 Diagrams**: Blue highlighting for all visual elements (graphs, charts, illustrations)
+- **🟡 Handwritten Text**: Amber for written notes and explanations
+- **🟢 Mathematical Notation**: Emerald for equations, symbols, and formulas
+- **⚫ Background**: Gray for whiteboard, slide content, static elements
+- **🔴 Erasure Regions**: Red for areas where content was removed
 
-### File Management
-- Video upload with processing pipeline
-- File status tracking (pending, processing, ready, completed)
-- Metadata extraction (duration, frames, resolution)
+### **Step-by-Step Diagram Annotation Process**
 
-## Data Flow
+1. **Navigate to Frame**: Use timeline scrubber or arrow keys to find frames containing diagrams
+2. **Select Annotation Type**: Choose "Diagram/Figure" from the content type panel
+3. **Choose Drawing Tool**: 
+   - Bounding box for rectangular diagrams (bar charts, simple graphs)
+   - Polygon for complex shapes (clicking points to create vertices around irregular diagrams)
+   - Freehand for tracing detailed outlines (hand-drawn sketches, organic shapes)
+4. **Draw Annotation**: Click and drag (or trace) to capture the diagram boundaries with pixel precision
+5. **Add Metadata**:
+   - **Label**: Descriptive name (e.g., "velocity_vs_time_graph", "free_body_diagram", "molecular_structure")
+   - **Confidence**: Rate annotation accuracy from 0.1 to 1.0 based on diagram clarity
+   - **Notes**: Context and details (e.g., "Parabolic curve showing y = x²", "Force diagram with 3 vectors")
 
-1. **Video Upload**: Users upload video files which are processed and stored
-2. **Project Assignment**: Videos are assigned to projects for organization
-3. **Annotation Workflow**: 
-   - Users navigate video frame-by-frame
-   - Create annotations using various tools
-   - Annotations are stored with frame coordinates
-   - Real-time updates broadcast to collaborators
-4. **Validation**: Lead annotators can validate annotations
-5. **Export**: Completed annotations can be exported in various formats
+### **Coordinate Storage Formats**
+The system captures different coordinate structures optimized for FCN-Lecture Net training:
 
-## External Dependencies
+```
+Bounding Box: {x: 100, y: 50, width: 200, height: 150}
+Polygon: {points: [{x: 100, y: 50}, {x: 300, y: 50}, {x: 200, y: 200}]}
+Freehand: {path: [{x: 100, y: 50}, {x: 101, y: 51}, {x: 102, y: 53}...]}
+```
 
-### Database & Storage
-- **@neondatabase/serverless**: Neon PostgreSQL serverless driver
-- **drizzle-orm**: Type-safe database ORM
-- **connect-pg-simple**: PostgreSQL session store
+### **Quality Control for Diagrams**
+- **Real-time Validation**: Lead annotators review diagram classifications for accuracy
+- **Consistency Checking**: Ensures proper distinction between diagrams, handwritten text, and mathematical notation
+- **Inter-annotator Agreement**: Quality metrics track diagram annotation consistency across team members
+- **Validation Pipeline**: Only validated diagram annotations are included in training data exports
 
-### UI & Styling
-- **@radix-ui/***: Unstyled, accessible UI primitives
-- **tailwindcss**: Utility-first CSS framework
-- **class-variance-authority**: Component variant management
+### **Collaboration Features**
+- **Live Updates**: Multiple annotators see diagram annotations appear instantly as they're created
+- **Frame Coordination**: Team members can work on different frames simultaneously without conflicts
+- **Visual Indicators**: Blue highlighting shows active diagram annotations to all collaborators
+- **Annotation History**: Complete tracking of who created and validated each diagram annotation
 
-### Real-time Features
-- **ws**: WebSocket server implementation
-- **@tanstack/react-query**: Server state management
+The tool integrates seamlessly with the InkSight AI note-taking ecosystem, providing the labeled data needed to improve handwriting recognition and mathematical notation detection in STEM education.
 
-### File Processing
-- **multer**: Multipart form data handling for file uploads
+## How to Run Locally
 
-## Deployment Strategy
+### Prerequisites
+- **Node.js 18+** and npm
+- **PostgreSQL 14+** database
+- **Git** for cloning the repository
 
-### Development
-- Vite dev server with HMR for frontend
-- tsx for TypeScript execution in development
-- Database migrations via Drizzle Kit
+### Quick Setup
 
-### Production
-- Vite build for optimized frontend bundle
-- esbuild for server-side TypeScript compilation
-- Express serves both API and static files
-- PostgreSQL database (configurable via DATABASE_URL)
+1. **Clone and Install**
+   ```bash
+   git clone <repository-url>
+   cd inksight-data-labeling-tool
+   npm install
+   ```
 
-### Infrastructure
-- **Platform**: Replit with autoscale deployment
-- **Database**: PostgreSQL 16 module
-- **File Storage**: Local filesystem with uploads directory
-- **WebSocket**: Integrated with HTTP server on same port
+2. **Database Setup**
+   ```bash
+   # Create a PostgreSQL database
+   createdb inksight_labeling
+   
+   # Set your database connection
+   export DATABASE_URL="postgresql://username:password@localhost:5432/inksight_labeling"
+   ```
 
-The application is designed to scale horizontally with stateless server architecture and database-backed session management. The real-time collaboration features use WebSocket connections that can be load-balanced across multiple server instances.
+3. **Initialize Database Schema**
+   ```bash
+   npm run db:push
+   ```
+
+4. **Start Development Server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Access the Application**
+   - Open http://localhost:5000 in your browser
+   - Click "🎬 Live Demo" to see the complete workflow
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+```
+DATABASE_URL=postgresql://username:password@localhost:5432/inksight_labeling
+NODE_ENV=development
+```
+
+### Demo Data (Optional)
+
+To populate with sample data for testing:
+```bash
+# Access the demo endpoint
+curl -X POST http://localhost:5000/api/demo/create-sample-data
+```
+
+### Production Deployment
+
+For production deployment:
+```bash
+npm run build
+npm start
+```
+
+The application runs both frontend and backend on the same port (5000) with integrated WebSocket support for real-time collaboration.
