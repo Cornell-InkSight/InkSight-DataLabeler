@@ -108,6 +108,7 @@ export default function Sidebar() {
   };
 
   const navigationItems = [
+    { path: "/demo", label: "🎬 Live Demo", icon: Video, active: location === "/demo", special: true },
     { path: "/", label: "Annotation Workspace", icon: Video, active: location === "/" },
     { path: "/upload", label: "Upload Data", icon: Upload, active: location === "/upload" },
     { path: "/dashboard", label: "Progress Dashboard", icon: BarChart3, active: location === "/dashboard" },
@@ -119,9 +120,11 @@ export default function Sidebar() {
       {/* Header */}
       <div className="p-6 border-b border-slate-200">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-            <Eye className="w-6 h-6 text-white" />
-          </div>
+          <img 
+            src="/assets/inksight-logo.png?v=1" 
+            alt="InkSight Logo" 
+            className="w-10 h-10 rounded-lg"
+          />
           <div>
             <h1 className="text-lg font-semibold text-slate-900">InkSight</h1>
             <p className="text-sm text-slate-500">Data Labeling Tool</p>

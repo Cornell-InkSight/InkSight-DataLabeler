@@ -8,12 +8,14 @@ import AnnotationWorkspace from "@/pages/annotation-workspace";
 import UploadData from "@/pages/upload-data";
 import ProgressDashboard from "@/pages/progress-dashboard";
 import ExportData from "@/pages/export-data";
+import Demo from "@/pages/demo";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/demo" component={Demo} />
       <Route path="/workspace/:videoId" component={AnnotationWorkspace} />
       <Route path="/upload" component={UploadData} />
       <Route path="/dashboard" component={ProgressDashboard} />
