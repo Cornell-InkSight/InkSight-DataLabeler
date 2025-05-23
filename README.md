@@ -2,8 +2,7 @@
 
 **A specialized annotation platform for STEM lecture videos designed to create high-quality training data for FCN-Lecture Net models.**
 
-Project Proposal: https://www.overleaf.com/read/cskygfzxhmyf#7d0297
-Project Report: https://www.overleaf.com/read/jbhskcfcwytt#9a4cd7
+Project Proposal can be accessed [here](https://www.overleaf.com/read/cskygfzxhmyf#7d0297), as well as [Project Report](https://www.overleaf.com/read/jbhskcfcwytt#9a4cd7) and the deployed [Demo](https://inksight-data-labeler.replit.app/).
 
 ## What it does
 
