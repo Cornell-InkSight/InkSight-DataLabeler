@@ -1,4 +1,4 @@
-# InkSight Data Labeling Tool
+# STEMFrame (emphasizing frame-level annotation for STEM lectures)
 
 **A specialized annotation platform for STEM lecture videos designed to create high-quality training data for FCN-Lecture Net models.**
 
@@ -29,7 +29,7 @@ The InkSight Data Labeling Tool enables researchers and educators to efficiently
 4. **Validate** annotations through quality control workflows
 5. **Export** training data in formats ready for AI model development
 
-The tool integrates seamlessly with the InkSight AI note-taking ecosystem, providing the labeled data needed to improve handwriting recognition and mathematical notation detection in STEM education.
+The tool integrates with the InkSight AI note-taking ecosystem, providing the labeled data needed to improve handwriting recognition and mathematical notation detection in STEM education.
 
 ## How to Run Locally
 
