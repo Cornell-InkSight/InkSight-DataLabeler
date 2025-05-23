@@ -1,4 +1,4 @@
-# STEMFrame (emphasizing frame-level annotation for STEM lectures)
+# InkSight AI - Data Labeling Tool
 
 **A specialized annotation platform for STEM lecture videos designed to create high-quality training data for FCN-Lecture Net models.**
 
