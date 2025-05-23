@@ -18,7 +18,8 @@ import {
   Clock,
   CheckCircle,
   AlertCircle,
-  Plus
+  Plus,
+  FolderOpen
 } from "lucide-react";
 
 interface Project {
@@ -109,7 +110,8 @@ export default function Sidebar() {
 
   const navigationItems = [
     { path: "/demo", label: "🎬 Live Demo", icon: Video, active: location === "/demo", special: true },
-    { path: "/", label: "Annotation Workspace", icon: Video, active: location === "/" },
+    { path: "/", label: "Home", icon: Eye, active: location === "/" },
+    { path: "/projects", label: "Projects", icon: Settings, active: location === "/projects" },
     { path: "/upload", label: "Upload Data", icon: Upload, active: location === "/upload" },
     { path: "/dashboard", label: "Progress Dashboard", icon: BarChart3, active: location === "/dashboard" },
     { path: "/export", label: "Export Data", icon: Download, active: location === "/export" },

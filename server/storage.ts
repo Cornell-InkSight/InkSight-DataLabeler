@@ -20,6 +20,7 @@ export interface IStorage {
   getProject(id: number): Promise<Project | undefined>;
   createProject(project: InsertProject): Promise<Project>;
   updateProject(id: number, updates: Partial<Project>): Promise<Project | undefined>;
+  deleteProject(id: number): Promise<boolean>;
 
   // Video file management
   getVideoFiles(projectId?: number): Promise<VideoFile[]>;
