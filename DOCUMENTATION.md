@@ -692,10 +692,146 @@ export const annotationMetrics = {
 
 ---
 
+## Future Work & Enhancements
+
+### **AWS S3 Cloud Storage Integration** (Priority: High)
+
+**Objective**: Migrate from local file storage to permanent cloud storage for production-scale video management.
+
+**Implementation Plan**:
+```typescript
+// AWS S3 Configuration
+const s3Config = {
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+  bucket: process.env.AWS_S3_BUCKET_NAME
+};
+
+// S3 Storage Structure
+s3://inksight-data-labeling/
+├── videos/
+│   ├── project-123/
+│   │   ├── original/lecture-001.mp4
+│   │   └── processed/lecture-001-frames/
+├── exports/
+│   ├── training-data/
+│   │   └── project-123-fcn-export.json
+└── backups/
+    └── annotations/
+        └── daily-backups/
+```
+
+**Benefits**:
+- **Permanent Storage**: Videos survive server restarts and deployments
+- **Unlimited Capacity**: Scale to thousands of lecture hours
+- **Global CDN**: Fast video delivery worldwide via CloudFront
+- **Cost Optimization**: Intelligent tiering moves old videos to cheaper storage
+- **Backup & Versioning**: Automatic data protection and recovery
+
+**Required Environment Variables**:
+```
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+AWS_REGION=us-east-1
+AWS_S3_BUCKET_NAME=inksight-data-labeling
+```
+
+**Migration Steps**:
+1. Set up AWS S3 bucket with proper IAM permissions
+2. Install AWS SDK and configure S3 client
+3. Update video upload endpoint to use S3 instead of local filesystem
+4. Implement CDN URLs for video streaming
+5. Add S3 export functionality for training data
+6. Set up automated backup policies
+
+### **Advanced Annotation Features**
+
+**1. AI-Assisted Pre-annotation**
+- Use existing computer vision models to suggest initial annotations
+- Human validation and correction workflow
+- Confidence scoring for automated suggestions
+
+**2. Template-Based Annotation**
+- Pre-defined templates for common STEM diagrams (graphs, flowcharts, molecular structures)
+- Batch annotation tools for similar content types
+- Custom template creation for specific courses
+
+**3. Semantic Annotation Enhancement**
+- Add semantic labels (e.g., "quadratic_function", "chemical_reaction", "force_diagram")
+- Hierarchical annotation categories for better AI training
+- Relationship mapping between diagram elements
+
+**4. Video Link Integration**
+- Support for video URLs instead of file uploads
+- Direct integration with YouTube, Vimeo, and other video platforms
+- Automatic video metadata extraction from external sources
+- Streaming annotation without local storage requirements
+
+**Implementation Benefits**:
+- **Reduced Storage Costs**: No need to store large video files locally or in S3
+- **Faster Setup**: Annotators can start immediately with just a video URL
+- **Platform Integration**: Work directly with existing video libraries
+- **Real-time Access**: Always access the latest version of videos
+- **Bandwidth Optimization**: Stream only the frames being annotated
+
+**Technical Implementation**:
+```typescript
+// Video URL Support
+interface VideoSource {
+  type: 'upload' | 'youtube' | 'vimeo' | 'direct_url';
+  url?: string;
+  platform_id?: string;
+  thumbnail_url?: string;
+  duration?: number;
+  resolution?: string;
+}
+
+// Platform-specific video handling
+const videoHandlers = {
+  youtube: (url: string) => extractYouTubeMetadata(url),
+  vimeo: (url: string) => extractVimeoMetadata(url),
+  direct_url: (url: string) => extractVideoHeaders(url)
+};
+```
+
+### **Performance & Scalability Improvements**
+
+**1. Database Optimization**
+- Implement database sharding for large annotation datasets
+- Add read replicas for improved query performance
+- Optimize JSONB indexing for coordinate-based searches
+
+**2. Real-time Collaboration Enhancement**
+- Redis-based session management for multi-server deployments
+- Improved conflict resolution for simultaneous annotations
+- Live cursor tracking with sub-pixel precision
+
+**3. Export System Enhancement**
+- Support for multiple export formats (COCO, YOLO, Pascal VOC)
+- Incremental exports for continuous model training
+- Quality metrics dashboard for training data assessment
+
+### **Integration & API Enhancements**
+
+**1. InkSight MVP Deep Integration**
+- Direct API connection for seamless data pipeline
+- Automated model training triggers
+- Performance feedback loop from deployed models
+
+**2. External Tool Integration**
+- Integration with popular annotation tools (LabelImg, CVAT)
+- Import/export compatibility with existing datasets
+- API endpoints for third-party tool connections
+
 ## Conclusion
 
 The InkSight Data Labeling Tool provides a comprehensive solution for creating high-quality training data for FCN-Lecture Net models. The architecture prioritizes scalability, data integrity, and seamless integration with the existing InkSight ecosystem. 
 
 The modular design ensures the system can evolve with changing requirements while maintaining backward compatibility and data consistency. The cloud migration strategy provides a clear path for scaling to handle large-scale annotation projects across multiple institutions.
+
+**Next Steps**: Implementing AWS S3 storage will transform this from a development tool to a production-ready platform capable of handling enterprise-scale STEM education annotation projects.
 
 For questions or technical support, refer to the API documentation or contact the development team.
