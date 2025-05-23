@@ -2,6 +2,9 @@
 
 **A specialized annotation platform for STEM lecture videos designed to create high-quality training data for FCN-Lecture Net models.**
 
+Project Proposal: https://www.overleaf.com/read/cskygfzxhmyf#7d0297
+Project Report: https://www.overleaf.com/read/jbhskcfcwytt#9a4cd7
+
 ## What it does
 
 The InkSight Data Labeling Tool enables researchers and educators to efficiently annotate lecture videos with frame-level precision. It's specifically designed for STEM education content, supporting the annotation of handwritten text, mathematical notation, diagrams, background elements, and erasure regions.
